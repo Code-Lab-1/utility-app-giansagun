@@ -1,0 +1,95 @@
+import math
+
+# Inventory of the vending machine, with item names as keys and prices as values
+inventory = {
+    "Toblerone": 7.50,
+    "Milky bar": 1.75,
+    "Galaxy": 2.50,
+    "Ripple": 2.70, 
+    "Kinder bueno": 3.25, 
+    "Kinder egg surprise": 4.60,
+    "Break": 1.20,
+    "Maltesers": 3.80,
+    "Kitkat": 2.70,
+    "Flakes": 3.10,
+    "Twix": 3.30,
+    "Snickers": 3.40,
+    "Bounty": 3.70,
+    "Eclaires": 9.25,
+    "Fererro": 4.75,
+    "Raffaello": 3.20,
+    "Dairymilk": 2.48,
+    "Mars": 3.30,
+    "Godiva": 3.30,
+    "Crunch": 9.50,
+    "M&M's": 3.70,
+    "Kisses": 10.10,
+    "Reese's": 2.85,
+    "Hersheys": 3.50,
+    "Lion": 2.30,
+    "Aero": 1.75,
+    "Bubbly": 3.35,
+    "Smarties": 2.70,
+    "Milkyway": 7.88,
+    "Ritter Sport": 11.25,
+    "Lindor": 4.80
+}
+
+# List of available denominations of coins in the vending machine
+coins = [100, 50, 20, 10, 5, 1, .75, .50, .25]
+
+def get_change(cost, amount_inserted):
+    # Calculate the change that is due
+    change_due = amount_inserted - cost
+
+    # Initialize a list to hold the coins that will be returned
+    change = []
+
+    # Loop through the available denominations of coins
+    for coin in coins:
+        # Calculate the number of coins of this denomination to return
+        num_coins = math.floor(change_due / coin)
+
+        # Add these coins to the change list
+        for i in range(num_coins):
+            change.append(coin)
+
+        # Subtract the value of these coins from the change due
+        change_due -= num_coins * coin
+
+    return change
+
+# Main function that simulates the vending machine
+def run_vending_machine():
+    # Print the items and prices
+    print("Hello, Welcome my name is Vendongs im the vending machine created by Gian Sagun.")
+    print("Here is what I have for today:")
+    for item, price in inventory.items():
+        print(f"{item}: ₱{price:.2f}")
+
+    # Get the user's selection
+    selection = input("What would you like to buy? ")
+    if selection not in inventory:
+        print("I'm really sorry, we don't have that item.")
+        return
+
+    # Get the price of the selected item
+    cost = inventory[selection]
+
+    # Get the amount of money that the user has inserted
+    amount_inserted = float(input("Please insert money: ₱"))
+    while amount_inserted < cost:
+        print(f"You need to insert at least ₱{cost:.2f} to purchase {selection}.")
+        amount_inserted += float(input("Your credit is not enough please insert more money: $"))
+
+    # Calculate and return the change
+    change = get_change(cost, amount_inserted)
+    print(f"Thank you for purchasing {selection}!")
+    if change:
+        print(f"Your change is: ₱{amount_inserted - cost}")
+        print(f"Coins: {change}")
+    else:
+        print("No change is due.")
+
+# Run the vending machine
+run_vending_machine()
